@@ -2,6 +2,7 @@ package com.example.q18;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -16,11 +17,11 @@ public class DBHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE COMPANIES (ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "NAME TEXT, ADDRESS TEXT, PHNO INTEGER)";
+                + "NAME TEXT, ADDRESS TEXT, PHNO TEXT)";
         db.execSQL(query);
     }
 
-    public Boolean addCompany(String name, String address, Integer phno){
+    public Boolean addCompany(String name, String address, String phno){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("NAME", name);
@@ -30,8 +31,14 @@ public class DBHandler extends SQLiteOpenHelper {
         return res != -1;
     }
 
+    public Cursor showCompany(){
+        SQLiteDatabase db = getWritableDatabase();
+        return db.rawQuery("SELECT * FROM COMPANIES",null);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        String str = "DROP TABLE IF EXISTS COMPANIES";
+        db.execSQL(str);
     }
 }
