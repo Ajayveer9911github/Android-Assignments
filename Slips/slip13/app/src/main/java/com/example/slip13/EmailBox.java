@@ -36,7 +36,5 @@ public class EmailBox extends AppCompatActivity {
                 startActivity(Intent.createChooser(intent1,"Choose an Email Client"));
             }
         });
-
-
     }
 }
